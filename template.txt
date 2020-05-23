@@ -1,0 +1,26 @@
+{
+	"blocks":[
+	{
+		"type": "section",
+		"text": {
+			"type": "mrkdwn",
+			"text": "Hey there! I'm a new bot and I'll let you know the upcoming webinars' registration status daily. If you have any ideas how to improve me - let know @Nelya_OPS_SG! :)\n\nCheck upcoming events' *registration status*:"
+		}
+	},
+	{
+		"type": "divider"
+	},
+	{% for webinar in webinars -%}
+	{
+		"type": "section",
+		"text": {
+			"type": "mrkdwn",
+			"text": " *{{ webinar.topic }}* \nin {{ webinar.timezone }} \n\t :calendar: starts _{{ webinar.start_time }} \n\n\t*REGISTERED* {{ webinar.num_registrants }} people"
+		}
+	},
+	{% endfor %}
+		{
+		"type": "divider"
+	}
+]
+}
