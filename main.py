@@ -3,7 +3,7 @@ import os
 from datetime import datetime, timedelta, timezone
 import jwt
 import requests
-from jinja2 import Environment, PackageLoader, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 
 BASE_URL = "https://api.zoom.us/v2"
 PAGE_SIZE = 100
