@@ -11,7 +11,7 @@ TOKEN_EXP = 5  # seconds
 
 
 def get_config():
-    with open('../config.json') as f:
+    with open('/data/config.json') as f:
         config_json = json.load(f)
         return config_json
 
@@ -155,10 +155,12 @@ def send_slack(webhook_url, slack_data):
 
 
 if __name__ == "__main__":
+    print('Getting credentials')
     config = get_config()
     API_KEY, API_SECRET = get_zoom_credentials(config)
     WEBHOOK_URL = config["parameters"]["slack_credentials"]["slack_webhook"]
 
+    print("Getting webinars details")
     webinars_consolidated = []
     for zoom_user in collect_users():
         if zoom_user["type"] == 2:
@@ -171,6 +173,7 @@ if __name__ == "__main__":
     env.filters['jsonify'] = json.dumps
     template = env.get_template('template.txt')
 
+    print('Sending data to Slack channel')
     slack_data = template.render(webinars=webinars_consolidated)
     send_slack(WEBHOOK_URL, json.loads(slack_data))
 
