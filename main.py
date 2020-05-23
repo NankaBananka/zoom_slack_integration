@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime, timedelta, timezone
+from dateutil.parser import parse
 import jwt
 import requests
 from jinja2 import Environment, FileSystemLoader
@@ -77,7 +78,7 @@ def collect_users():
 
 
 def check_date(webinar_time):
-    datetime_utc = datetime.strptime(webinar_time, "%Y-%m-%dT%H:%M:%S%Z")
+    datetime_utc = parse(timestr=webinar_time)
     datetime_now = datetime.now(timezone.utc)
 
     if datetime_utc > datetime_now:
@@ -137,10 +138,9 @@ def get_enriched_webinars_info(user_id):
 
 
 def send_slack(webhook_url, slack_data):
-
     # Set the webhook_url to the one provided by Slack when you create the webhook at https://my.slack.com/services/new/incoming-webhook/
-    #webhook_url = webhook_url
-    #slack_data = slack_data
+    # webhook_url = webhook_url
+    # slack_data = slack_data
 
     response = requests.post(
         webhook_url, data=json.dumps(slack_data),
@@ -176,4 +176,3 @@ if __name__ == "__main__":
     print('Sending data to Slack channel')
     slack_data = template.render(webinars=webinars_consolidated)
     send_slack(WEBHOOK_URL, json.loads(slack_data))
-
