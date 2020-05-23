@@ -77,7 +77,7 @@ def collect_users():
 
 
 def check_date(webinar_time):
-    datetime_utc = datetime.strptime(webinar_time, "%Y-%m-%dT%H:%M:%S%z")
+    datetime_utc = datetime.strptime(webinar_time, "%Y-%m-%dT%H:%M:%S%Z")
     datetime_now = datetime.now(timezone.utc)
 
     if datetime_utc > datetime_now:
