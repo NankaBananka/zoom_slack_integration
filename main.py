@@ -12,7 +12,7 @@ TOKEN_EXP = 5  # seconds
 
 
 def get_config():
-    with open('/data/config.json') as f:
+    with open('../config.json') as f:
         config_json = json.load(f)
         return config_json
 
@@ -97,7 +97,7 @@ def collect_future_webinars_info(user_id):
             if check_date(webinar["start_time"]):
                 webinar_info = {
                     "webinar_id": str(webinar["id"]),
-                    "topic": webinar["topic"],
+                    "topic": webinar["topic"].replace('"', "'"),
                     "start_time": webinar["start_time"],
                     "timezone": webinar["timezone"]
                 }
@@ -175,4 +175,5 @@ if __name__ == "__main__":
 
     print('Sending data to Slack channel')
     slack_data = template.render(webinars=webinars_consolidated)
+
     send_slack(WEBHOOK_URL, json.loads(slack_data))
