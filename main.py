@@ -12,7 +12,7 @@ TOKEN_EXP = 5  # seconds
 
 
 def get_config():
-    with open('../config.json') as f:
+    with open('/data/config.json') as f:
         config_json = json.load(f)
         return config_json
 
