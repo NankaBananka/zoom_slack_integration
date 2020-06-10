@@ -10,13 +10,29 @@
 	{
 		"type": "divider"
 	},
+
 	{% for webinar in webinars -%}
 	{
 		"type": "section",
 		"text": {
 			"type": "mrkdwn",
-			"text": " *{{ webinar.topic }}* \nin {{ webinar.timezone }} \n\t :calendar: starts _{{ webinar.start_time }} \n\n\t*REGISTERED* {{ webinar.num_registrants }} people"
-		}
+			"text": " *{{ webinar.topic }}* \nin {{ webinar.timezone }} \n\t :calendar: starts _{{ webinar.start_time }} \n\n\t*REGISTERED* {{ webinar.num_registrants }} people\n"
+				}
+	},
+
+
+
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "```SOURCE              Registrations/Visitors\n{% for tracking_source in webinar.tracking_sources -%}{{ tracking_source.source_name.ljust(20) }}{{ tracking_source.registrationr_count }} / {{ tracking_source.visitor_count }}\n{% endfor %}```"
+					}
+		},
+
+
+		{
+		"type": "divider"
 	},
 	{% endfor %}
 		{

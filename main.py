@@ -130,10 +130,22 @@ def get_number_registrants(webinar_id):
     return num_registrants
 
 
+def get_tracking_sources(webinar_id):
+    endpoint = "/webinars/" + webinar_id + "/tracking_sources"
+    page_number = 1
+
+    response_json = get_response(endpoint=endpoint, page_number=page_number)
+    tracking_sources = response_json["tracking_sources"]
+
+    return tracking_sources
+
+
 def get_enriched_webinars_info(user_id):
     webinars_info = collect_future_webinars_info(user_id)
     for webinar in webinars_info:
         webinar["num_registrants"] = get_number_registrants(webinar["webinar_id"])
+        webinar["tracking_sources"] = get_tracking_sources(webinar["webinar_id"])
+
     return webinars_info
 
 
@@ -175,5 +187,6 @@ if __name__ == "__main__":
 
     print('Sending data to Slack channel')
     slack_data = template.render(webinars=webinars_consolidated)
+    print(slack_data)
 
     send_slack(WEBHOOK_URL, json.loads(slack_data))
