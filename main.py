@@ -39,7 +39,8 @@ def create_jwt(key, secret, algorythm, exp_seconds):
 def get_response(endpoint, page_number):
     jwt_token = create_jwt(API_KEY, API_SECRET, 'HS256', 10)
 
-    headers = {'authorization': 'Bearer ' + jwt_token.decode()}
+    #headers = {'authorization': 'Bearer ' + jwt_token.decode()}
+    headers = {'authorization': 'Bearer ' + jwt_token}
     querystring = {"page_number": page_number, "page_size": PAGE_SIZE}
     url_request = BASE_URL + endpoint
     print(url_request)
