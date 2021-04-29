@@ -176,9 +176,11 @@ if __name__ == "__main__":
     print("Getting webinars details")
     webinars_consolidated = []
     for zoom_user in collect_users():
-        if zoom_user["type"] == 2:
+        try:
             webinars_data = get_enriched_webinars_info(zoom_user["user_id"])
             webinars_consolidated += webinars_data
+        except:
+            print(f'user {zoom_user} doesn`t have any webinars')
 
     THIS_DIR = os.path.dirname(os.path.abspath(__file__))
     templateLoader = FileSystemLoader(searchpath=THIS_DIR)
